@@ -1,0 +1,7 @@
+# Excluir archivos y carpetas del módulo 'antigravity' de Python
+antigravity/
+antigravity.py
+
+# Excluir scripts de PowerShell y Batch
+*.ps1
+*.bat
