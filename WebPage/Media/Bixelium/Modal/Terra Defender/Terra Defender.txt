@@ -1,0 +1,1 @@
+Fue el primer juego de Bixelium, algo inspirado en Asteroids, Space Invaders, con un control orbital.

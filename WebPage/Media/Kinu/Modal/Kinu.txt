@@ -1,0 +1,3 @@
+Nuestro proyecto de titulación consistió en hacer un serious game para incentivar un estilo de vida saludable a los niños mediante el uso de Unity3D y Kinect. Al inicio se iba a hacer con XNA por mi experiencia previa en el curso, pero Luis me convenció de usar Unity. Gracias wey. 
+
+Honestamente, al inicio pensamos en hacer una app de iPad, pero el profe no nos vio muy convencidos y nos preguntó: "¿Si por ustedes fuera, qué harían?", le respondimos: un juego, y dijo: "Pues hagan un serious game y disfruten su tesis". Gracias profe.

@@ -1,0 +1,1 @@
+En este curso desarrollamos un clon de Arkanoid y después intenté hacer un juego de peleas de DBZ, en el cual fallé estrepitosamente.
