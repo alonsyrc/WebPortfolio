@@ -76,7 +76,7 @@ function renderModalCarousels() {
                 tabBtn.type = 'button';
                 tabBtn.className = `carousel-tab-btn ${cIdx === 0 ? 'active' : ''}`;
                 tabBtn.innerHTML = `${escapeHtml(carousel.title)} <span class="carousel-tab-badge">${carousel.items.length}</span>`;
-                tabBtn.onclick = function() {
+                tabBtn.onclick = function () {
                     switchCarouselTab(tabBtn, carouselId, container);
                 };
                 tabsContainer.appendChild(tabBtn);
@@ -276,7 +276,7 @@ function initCarousel(carouselEl) {
                         }
                     });
                 }
-                video.play().catch(() => {});
+                video.play().catch(() => { });
             } else {
                 video.pause();
             }
@@ -304,7 +304,7 @@ function initCarousel(carouselEl) {
                     // CORS or drawImage failures — ignore, keep default frame
                 }
                 // Reset to start so play begins at t=0 without stutter from mid-seek
-                try { video.currentTime = 0; } catch (_) {}
+                try { video.currentTime = 0; } catch (_) { }
                 video.dataset.posterReady = '1';
                 video.pause();
                 updateOverlayUI();
@@ -541,7 +541,7 @@ document.addEventListener('keydown', (e) => {
                         if (s) s.classList.remove('is-playing');
                     }
                 });
-                video.play().catch(() => {});
+                video.play().catch(() => { });
                 showOSD('▶ Reproducir');
             } else {
                 video.pause();
@@ -583,11 +583,11 @@ document.addEventListener('keydown', (e) => {
             e.preventDefault();
             if (!document.fullscreenElement) {
                 (video.requestFullscreen || video.webkitRequestFullscreen || video.mozRequestFullScreen).call(video)
-                    .catch(() => {});
+                    .catch(() => { });
                 showOSD('⛶ Pantalla completa');
             } else {
                 (document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen).call(document)
-                    .catch(() => {});
+                    .catch(() => { });
                 showOSD('⊡ Salir de pantalla completa');
             }
         }
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.prepend(progressBar);
 
     // Custom cursor (only for mouse/trackpad users)
-    const cursorDot  = document.createElement('div'); cursorDot.id  = 'cursor-dot';
+    const cursorDot = document.createElement('div'); cursorDot.id = 'cursor-dot';
     const cursorRing = document.createElement('div'); cursorRing.id = 'cursor-ring';
     document.body.append(cursorDot, cursorRing);
 
@@ -646,25 +646,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Custom cursor ──────────────────────────────────────────────────────
     let ringX = 0, ringY = 0;
-    let dotX  = 0, dotY  = 0;
+    let dotX = 0, dotY = 0;
     let rafId = null;
 
     const HOVERABLES = 'a, button, [onclick], label, .project-card, .carousel-nav, .carousel-dot, .carousel-tab-btn, .video-play-overlay';
 
     document.addEventListener('mousemove', (e) => {
-        dotX  = e.clientX;
-        dotY  = e.clientY;
+        dotX = e.clientX;
+        dotY = e.clientY;
         if (!rafId) rafId = requestAnimationFrame(animateCursor);
     });
 
     function animateCursor() {
         rafId = null;
         // Dot snaps instantly
-        cursorDot.style.left  = dotX + 'px';
-        cursorDot.style.top   = dotY + 'px';
+        cursorDot.style.left = dotX + 'px';
+        cursorDot.style.top = dotY + 'px';
         // Ring lags behind (lerp handled via CSS transition)
         cursorRing.style.left = dotX + 'px';
-        cursorRing.style.top  = dotY + 'px';
+        cursorRing.style.top = dotY + 'px';
     }
 
     // Grow ring on hoverable elements
@@ -677,11 +677,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hide when leaving the window
     document.addEventListener('mouseleave', () => {
-        cursorDot.style.opacity  = '0';
+        cursorDot.style.opacity = '0';
         cursorRing.style.opacity = '0';
     });
     document.addEventListener('mouseenter', () => {
-        cursorDot.style.opacity  = '1';
+        cursorDot.style.opacity = '1';
         cursorRing.style.opacity = '1';
     });
 
@@ -734,7 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Card hover icon (expand SVG) ──────────────────────────────────────
     const EXPAND_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+        <path d="M12 5C6.5 5 2 12 2 12s4.5 7 10 7 10-7 10-7-4.5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
     </svg>`;
     document.querySelectorAll('.project-media').forEach(media => {
         const iconWrap = document.createElement('div');
@@ -755,13 +755,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const dot = document.createElement('span');
             dot.className = 'click-burst';
 
-            const angle  = (i / count) * 360;
-            const dist   = Math.random() * 55 + 30;         // 30–85px radius
-            const bx     = Math.cos(angle * Math.PI / 180) * dist;
-            const by     = Math.sin(angle * Math.PI / 180) * dist;
-            const size   = Math.random() * 5 + 4;           // 4–9px
-            const color  = BURST_COLORS[Math.floor(Math.random() * BURST_COLORS.length)];
-            const delay  = Math.random() * 0.06;            // slight stagger
+            const angle = (i / count) * 360;
+            const dist = Math.random() * 55 + 30;         // 30–85px radius
+            const bx = Math.cos(angle * Math.PI / 180) * dist;
+            const by = Math.sin(angle * Math.PI / 180) * dist;
+            const size = Math.random() * 5 + 4;           // 4–9px
+            const color = BURST_COLORS[Math.floor(Math.random() * BURST_COLORS.length)];
+            const delay = Math.random() * 0.06;            // slight stagger
 
             dot.style.cssText = [
                 `left:${x}px`, `top:${y}px`,
