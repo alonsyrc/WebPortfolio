@@ -1,0 +1,3 @@
+La opus magnum de Blue Fenec, un shooter 2.5D PVP de couch multiplayer. Protagonizado por comida, la idea de los personajes surgió de que siempre que nos juntábamos era difícil decidir qué comer entre pizza o hamburguesa. 
+
+Food Wars retoma el trabajo de Pepinos Bullet, un prototipo de juego de un miembro llamado Adán donde dos pepinos se agarran a balazos.

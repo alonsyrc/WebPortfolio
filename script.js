@@ -154,6 +154,178 @@ function renderModalCarousels() {
     });
 }
 
+// ===== FEATURED PROJECTS =====
+function renderFeaturedProjects() {
+    if (!window.FEATURED_PROJECTS || window.FEATURED_PROJECTS.length === 0) {
+        const grid = document.getElementById('featured-grid');
+        if (grid) {
+            grid.innerHTML = `
+                <div class="carousel-placeholder" style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-muted); background: var(--bg-hover); border-radius: 12px;">
+                    <p>No hay proyectos destacados. Crea carpetas en <code>Media/Destacado/Modal/[NombreProyecto]/</code> y ejecuta <code>generate-media.bat</code></p>
+                </div>`;
+        }
+        return;
+    }
+
+    const grid = document.getElementById('featured-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    window.FEATURED_PROJECTS.forEach((project, idx) => {
+        const firstItem = project.items[0];
+        const isVideo = firstItem.type === 'video';
+        const thumbSrc = firstItem.src;
+
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.style.transitionDelay = `${idx * 0.08}s`;
+        card.onclick = () => openFeaturedModal(project);
+
+        if (isVideo) {
+            card.innerHTML = `
+                <div class="project-media">
+                    <video src="${escapeHtml(thumbSrc)}" muted playsinline preload="metadata"></video>
+                    <div class="video-badge" aria-hidden="true">▶ Video</div>
+                    <div class="card-hover-icon"></div>
+                </div>
+                <div class="project-info">
+                    <h3>${escapeHtml(project.title)}</h3>
+                </div>
+            `;
+            const mediaEl = card.querySelector('.project-media');
+            const PLAY_SVG = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                <path d="M8 5v14l11-7z"/>
+            </svg>`;
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'card-hover-icon';
+            iconWrap.innerHTML = PLAY_SVG;
+            mediaEl.appendChild(iconWrap);
+        } else {
+            card.innerHTML = `
+                <div class="project-media">
+                    <img src="${escapeHtml(thumbSrc)}" alt="${escapeHtml(project.title)}" loading="lazy" decoding="async">
+                    <div class="card-hover-icon"></div>
+                </div>
+                <div class="project-info">
+                    <h3>${escapeHtml(project.title)}</h3>
+                </div>
+            `;
+        }
+
+        // Inject play SVG for image case
+        if (!isVideo) {
+            const mediaEl = card.querySelector('.project-media');
+            const PLAY_SVG = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                <path d="M8 5v14l11-7z"/>
+            </svg>`;
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'card-hover-icon';
+            iconWrap.innerHTML = PLAY_SVG;
+            mediaEl.appendChild(iconWrap);
+        }
+
+        grid.appendChild(card);
+    });
+
+    // Observe for scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    grid.querySelectorAll('.project-card').forEach(card => {
+        card.classList.add('scroll-reveal');
+        revealObserver.observe(card);
+    });
+}
+
+function openFeaturedModal(project) {
+    // Create a temporary modal for this featured project
+    const modalId = 'featured-modal-' + project.title.toLowerCase().replace(/\s+/g, '-');
+    let modal = document.getElementById(modalId);
+
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.id = modalId;
+        modal.onclick = (e) => { if (e.target === modal) closeModal(modalId); };
+
+        // Build carousel HTML similar to modal carousels
+        const carouselId = modalId + '-c0';
+        let slidesHtml = '';
+        project.items.forEach((item) => {
+            if (item.type === 'video') {
+                slidesHtml += `
+                    <div class="carousel-slide carousel-slide-video">
+                        <video src="${escapeHtml(item.src)}" controls playsinline preload="metadata"></video>
+                        <div class="video-badge" aria-hidden="true">▶ Video</div>
+                        <button type="button" class="video-play-overlay" aria-label="Reproducir video">
+                            <span class="video-play-btn">
+                                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            </span>
+                        </button>
+                    </div>`;
+            } else {
+                slidesHtml += `
+                    <div class="carousel-slide">
+                        <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async">
+                    </div>`;
+            }
+        });
+
+        const itemNames = project.items.map(item => item.name || '');
+        const itemDescriptions = project.items.map(item => item.description || project.description || '');
+
+        modal.innerHTML = `
+            <div class="modal">
+                <button class="modal-close" onclick="closeModal('${modalId}')">&times;</button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>${escapeHtml(project.title)}</h2>
+                        <div class="modal-meta">
+                            <span class="modal-role">Proyecto Destacado</span>
+                        </div>
+                    </div>
+                    <div class="modal-media-wrapper">
+                        <div class="carousel-container-item active" id="${carouselId}">
+                            <div class="carousel" data-carousel="${carouselId}">
+                                <div class="carousel-counter"><span class="curr">1</span> / <span class="total">${project.items.length}</span></div>
+                                <div class="carousel-track">
+                                    ${slidesHtml}
+                                </div>
+                                ${project.items.length > 1 ? `
+                                <button type="button" class="carousel-nav prev" onclick="moveCarousel('${carouselId}', -1)" aria-label="Anterior">&lsaquo;</button>
+                                <button type="button" class="carousel-nav next" onclick="moveCarousel('${carouselId}', 1)" aria-label="Siguiente">&rsaquo;</button>
+                                <div class="carousel-dots"></div>
+                                ` : ''}
+                            </div>
+                            <div class="carousel-caption-container">
+                                <div class="carousel-item-title" data-carousel-title="${carouselId}">${escapeHtml(itemNames[0] || '')}</div>
+                                <div class="carousel-item-desc" data-carousel-desc="${carouselId}">${escapeHtml(itemDescriptions[0] || '')}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        // Store item names/descriptions for the carousel
+        const itemContainer = modal.querySelector('.carousel-container-item');
+        itemContainer._itemNames = itemNames;
+        itemContainer._itemDescriptions = itemDescriptions;
+    }
+
+    openModal(modalId);
+}
+
 function switchCarouselTab(tabBtn, targetCarouselId, container) {
     // 1. Update tab active state
     const tabs = container.querySelectorAll('.carousel-tab-btn');
@@ -275,58 +447,20 @@ function initCarousel(carouselEl) {
                             if (otherSlide) otherSlide.classList.remove('is-playing');
                         }
                     });
-                }
-                video.play().catch(() => { });
-            } else {
-                video.pause();
-            }
-        }
+}
+        video.play().catch(() => { });
+    } else {
+        video.pause();
+    }
+}
 
-        // Capture a mid-video frame as poster, then reset to 0 so playback starts clean
-        function capturePosterFrame() {
-            if (video.dataset.posterReady === '1') return;
-            if (!video.duration || !isFinite(video.duration) || video.duration < 0.5) return;
+overlay.addEventListener('click', togglePlay);
+video.addEventListener('click', togglePlay);
+video.addEventListener('play', updateOverlayUI);
+video.addEventListener('pause', updateOverlayUI);
+video.addEventListener('ended', updateOverlayUI);
 
-            const target = Math.min(video.duration * 0.4, Math.max(video.duration - 0.15, 0));
-
-            const onSeeked = () => {
-                video.removeEventListener('seeked', onSeeked);
-                try {
-                    if (video.videoWidth > 0 && video.videoHeight > 0) {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                        video.poster = canvas.toDataURL('image/jpeg', 0.82);
-                    }
-                } catch (_) {
-                    // CORS or drawImage failures — ignore, keep default frame
-                }
-                // Reset to start so play begins at t=0 without stutter from mid-seek
-                try { video.currentTime = 0; } catch (_) { }
-                video.dataset.posterReady = '1';
-                video.pause();
-                updateOverlayUI();
-            };
-
-            video.addEventListener('seeked', onSeeked);
-            try {
-                video.currentTime = target;
-            } catch (_) {
-                video.removeEventListener('seeked', onSeeked);
-            }
-        }
-
-        overlay.addEventListener('click', togglePlay);
-        video.addEventListener('click', togglePlay);
-        video.addEventListener('play', updateOverlayUI);
-        video.addEventListener('pause', updateOverlayUI);
-        video.addEventListener('ended', updateOverlayUI);
-        video.addEventListener('loadedmetadata', capturePosterFrame);
-        if (video.readyState >= 1) capturePosterFrame();
-
-        updateOverlayUI();
+updateOverlayUI();
     });
 
     updateCarousel(id);
@@ -406,6 +540,19 @@ function updateCarousel(id) {
         state.descEl.textContent = descText;
         state.descEl.style.display = descText ? '' : 'none';
     }
+
+    // Auto-play video in new active slide after 100ms
+    const newSlide = state.slides[state.current];
+    if (newSlide) {
+        const video = newSlide.querySelector('video');
+        if (video) {
+            setTimeout(() => {
+                video.play().catch(() => {
+                    // Autoplay blocked
+                });
+            }, 100);
+        }
+    }
 }
 
 // ===== MODALS =====
@@ -420,6 +567,16 @@ function openModal(id) {
     modal.querySelectorAll('.carousel-container-item.active .carousel, .modal-media-container > .modal-media-wrapper > .carousel').forEach(carousel => {
         initCarousel(carousel);
     });
+
+    // Auto-play first video after 100ms if modal has a video
+    setTimeout(() => {
+        const video = modal.querySelector('video');
+        if (video) {
+            video.play().catch(() => {
+                // Autoplay blocked by browser
+            });
+        }
+    }, 100);
 }
 
 function closeModal(id) {
@@ -598,17 +755,13 @@ document.addEventListener('keydown', (e) => {
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     renderModalCarousels();
+    renderFeaturedProjects();
 
     // ── Inject DOM elements ────────────────────────────────────────────────
     // Scroll progress bar
     const progressBar = document.createElement('div');
     progressBar.id = 'scroll-progress';
     document.body.prepend(progressBar);
-
-    // Custom cursor (only for mouse/trackpad users)
-    const cursorDot = document.createElement('div'); cursorDot.id = 'cursor-dot';
-    const cursorRing = document.createElement('div'); cursorRing.id = 'cursor-ring';
-    document.body.append(cursorDot, cursorRing);
 
     // Hero particles
     const hero = document.querySelector('.hero');
@@ -643,47 +796,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
     }, { passive: true });
-
-    // ── Custom cursor ──────────────────────────────────────────────────────
-    let ringX = 0, ringY = 0;
-    let dotX = 0, dotY = 0;
-    let rafId = null;
-
-    const HOVERABLES = 'a, button, [onclick], label, .project-card, .carousel-nav, .carousel-dot, .carousel-tab-btn, .video-play-overlay';
-
-    document.addEventListener('mousemove', (e) => {
-        dotX = e.clientX;
-        dotY = e.clientY;
-        if (!rafId) rafId = requestAnimationFrame(animateCursor);
-    });
-
-    function animateCursor() {
-        rafId = null;
-        // Dot snaps instantly
-        cursorDot.style.left = dotX + 'px';
-        cursorDot.style.top = dotY + 'px';
-        // Ring lags behind (lerp handled via CSS transition)
-        cursorRing.style.left = dotX + 'px';
-        cursorRing.style.top = dotY + 'px';
-    }
-
-    // Grow ring on hoverable elements
-    document.addEventListener('mouseover', (e) => {
-        if (e.target.closest(HOVERABLES)) cursorRing.classList.add('is-hovering');
-    });
-    document.addEventListener('mouseout', (e) => {
-        if (e.target.closest(HOVERABLES)) cursorRing.classList.remove('is-hovering');
-    });
-
-    // Hide when leaving the window
-    document.addEventListener('mouseleave', () => {
-        cursorDot.style.opacity = '0';
-        cursorRing.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-        cursorDot.style.opacity = '1';
-        cursorRing.style.opacity = '1';
-    });
 
     // ── Hero entrance tweens ───────────────────────────────────────────────
     const nav = document.querySelector('nav');
@@ -732,11 +844,15 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.observe(card);
     });
 
-    // ── Card hover icon (expand SVG) ──────────────────────────────────────
+    // ── Card hover icon (eye SVG for Estudios/Proyectos, skip featured) ──────────────────
     const EXPAND_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 5C6.5 5 2 12 2 12s4.5 7 10 7 10-7 10-7-4.5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
     </svg>`;
     document.querySelectorAll('.project-media').forEach(media => {
+        const card = media.closest('.project-card');
+        // Skip featured project cards - they inject their own icon in renderFeaturedProjects
+        if (card && card.closest('#featured-grid')) return;
+        if (media.querySelector('.card-hover-icon')) return;
         const iconWrap = document.createElement('div');
         iconWrap.className = 'card-hover-icon';
         iconWrap.innerHTML = EXPAND_SVG;

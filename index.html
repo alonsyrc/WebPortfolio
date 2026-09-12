@@ -3,13 +3,70 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Alonso Rodriguez | Game Dev & XR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a0f25">
+    
+    <!-- SEO -->
+    <meta name="description" content="Alonso Rodriguez — Game Developer & XR Engineer. 10+ años creando videojuegos, Realidad Virtual y Aumentada. Proyectos para enterprise, capacitación inmersiva y experiencias interactivas.">
+    <meta name="keywords" content="Game Developer, XR Engineer, Unity, VR, AR, Realidad Virtual, Realidad Aumentada, Videojuegos, Capacitación Inmersiva, Alonso Rodriguez">
+    <meta name="author" content="Alonso Rodriguez">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alonsordz.dev/">
+    <meta property="og:title" content="Alonso Rodriguez | Game Dev & XR Engineer">
+    <meta property="og:description" content="10+ años desarrollando videojuegos, VR y AR. Proyectos enterprise, capacitación inmersiva y experiencias interactivas.">
+    <meta property="og:image" content="https://alonsordz.dev/og-image.jpg">
+    <meta property="og:locale" content="es_ES">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://alonsordz.dev/">
+    <meta name="twitter:title" content="Alonso Rodriguez | Game Dev & XR Engineer">
+    <meta name="twitter:description" content="10+ años desarrollando videojuegos, VR y AR. Proyectos enterprise, capacitación inmersiva y experiencias interactivas.">
+    <meta name="twitter:image" content="https://alonsordz.dev/og-image.jpg">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://alonsordz.dev/">
+    
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Alonso Rodriguez",
+        "jobTitle": "Game Developer & XR Engineer",
+        "description": "Game Developer and XR Engineer with 10+ years of experience in video games, Virtual Reality, and Augmented Reality.",
+        "url": "https://alonsordz.dev/",
+        "sameAs": [
+            "https://github.com/AlonsoRodriguez",
+            "https://linkedin.com/in/alonso-rodriguez"
+        ],
+        "knowsAbout": [
+            "Unity", "C#", "VR", "AR", "XR", "Game Development", "Immersive Training", "Enterprise Solutions"
+        ],
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Tecza Technologies / Apolograma"
+        }
+    }
+    </script>
+    
+    <title>Alonso Rodriguez | Game Dev & XR</title>
 </head>
 
 <body>
@@ -22,8 +79,9 @@
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#inicio" onclick="closeMenu()">Inicio</a></li>
+                <li><a href="#proyectos-destacados" onclick="closeMenu()">Proyectos</a></li>
+                <li><a href="#estudios" onclick="closeMenu()">Estudios</a></li>
                 <li><a href="#trayectoria" onclick="closeMenu()">Trayectoria</a></li>
-                <li><a href="#proyectos" onclick="closeMenu()">Proyectos</a></li>
                 <li><a href="#contacto" onclick="closeMenu()">Contacto</a></li>
             </ul>
         </div>
@@ -45,92 +103,53 @@
                 una escuela llamada AztecTech, a la cual tampoco terminé asistiendo ya que tenia como 10 años.
             </p>-->
             <div class="hero-cta">
-                <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+                <a href="#proyectos-destacados" class="btn btn-primary">Ver proyectos</a>
                 <a href="#contacto" class="btn btn-secondary">Contactar</a>
             </div>
         </div>
     </section>
 
-    <section id="trayectoria">
+    <section id="proyectos-destacados">
         <div class="section-header">
-            <h2>Trayectoria</h2>
+            <h2>Proyectos Destacados</h2>
+            <p class="glitch-text" data-text="Toca cada tarjeta para ver detalles">
+                Toca cada tarjeta para ver detalles
+            </p>
         </div>
-        <div class="timeline">
-            <div class="timeline-item">
-                <span class="timeline-year">2017 - Presente</span>
-                <h3>Apolograma / Tecza Technologies</h3>
-                <p>Trabajo profesionalmente desarrollando videojuegos, VR y AR, capacitaciones en VR y experiencias
-                    interactivas.</p>
-                <div class="timeline-tags">
-                    <span class="tag">Videojuegos</span><span class="tag">VR</span><span class="tag">AR</span><span
-                        class="tag">Enterprise</span><span class="tag">Profesional</span>
+        <div class="projects-grid" id="featured-grid">
+            <div class="skeleton-card">
+                <div class="skeleton-media"></div>
+                <div class="skeleton-info">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text short"></div>
                 </div>
             </div>
-            <div class="timeline-item">
-                <span class="timeline-year">2017 - 2020</span>
-                <h3>Blue Fenec</h3>
-                <p>Blue Fenec, estudio especializado en experiencias inmersivas de VR y videojuegos.</p>
-                <div class="timeline-tags">
-                    <span class="tag">Videojuegos</span><span class="tag">VR</span><span class="tag">XR</span><span
-                        class="tag">Cofundador</span>
+            <div class="skeleton-card">
+                <div class="skeleton-media"></div>
+                <div class="skeleton-info">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text short"></div>
                 </div>
             </div>
-            <div class="timeline-item">
-                <span class="timeline-year">2015 - 2017</span>
-                <h3>Bixelium</h3>
-                <p>Primero fuimos un club de varios estudios de videojuegos; luego formamos un solo estudio más grande
-                    para proyectos más ambiciosos.</p>
-                <div class="timeline-tags">
-                    <span class="tag">Game Studio</span><span class="tag">Cofundador</span><span class="tag">Club de
-                        Desarrolladores de Videojuegos</span>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="timeline-year">2014 - 2015</span>
-                <h3>Black Spring</h3>
-                <p>Junto a mi compañero de tesis, fundamos Black Spring, nuestro primer estudio de desarrollo de
-                    videojuegos.</p>
-                <div class="timeline-tags">
-                    <span class="tag">Game Studio</span><span class="tag">Cofundador</span><span
-                        class="tag">Indie</span>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="timeline-year">2013 - 2014 </span>
-                <h3>Umbral Light Games - El Sacrificio</h3>
-                <p>Participé como primer programador en El Sacrificio, un juego de terror tipo Slenderman desarrollado
-                    por Umbral Light Games. No fui fundador, pero fui el primer programador que se unió al equipo.</p>
-                <div class="timeline-tags">
-                    <span class="tag">Terror</span><span class="tag">Slenderman-like</span><span
-                        class="tag">Programador</span>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="timeline-year">2012</span>
-                <h3>Proyecto de Titulación</h3>
-                <p>Mi compañero de tesis y yo desarrollamos un serious game utilizando Unity y Kinect, originalmente iba
-                    a ser XNA. Mi primer proyecto formal.</p>
-                <div class="timeline-tags">
-                    <span class="tag">Unity</span><span class="tag">Kinect</span><span class="tag">Serious Game</span>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="timeline-year">2010</span>
-                <h3>XNA & C#</h3>
-                <p>Recibí un curso extracurricular de XNA y C# en la universidad. Fue mi primer acercamiento a la
-                    programación de videojuegos. Al terminar el curso intenté hacer un juego de peleas de Dragon Ball,
-                    experiencia que despertó mi pasión por crear videojuegos.</p>
-                <div class="timeline-tags">
-                    <span class="tag">XNA</span><span class="tag">C#</span><span class="tag">Primer Contacto</span>
+            <div class="skeleton-card">
+                <div class="skeleton-media"></div>
+                <div class="skeleton-info">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text short"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="proyectos">
+    <section id="estudios">
         <div class="section-header">
             <h2>Estudios & Proyectos</h2>
-            <p>Toca cualquier tarjeta para ver detalles, videos y screenshots</p>
+            <p class="glitch-text" data-text="Toca cualquier tarjeta para ver detalles, videos y screenshots">
+                Toca cualquier tarjeta para ver detalles, videos y screenshots
+            </p>
         </div>
         <div class="projects-grid">
             <div class="project-card" onclick="openModal('modal-tecza')">
@@ -215,6 +234,82 @@
         </div>
     </section>
 
+    <section id="trayectoria">
+        <div class="section-header">
+            <h2>Trayectoria</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item scroll-reveal">
+                <span class="timeline-year">2017 - Presente</span>
+                <h3>Apolograma / Tecza Technologies</h3>
+                <p>Trabajo profesionalmente desarrollando videojuegos, VR y AR, capacitaciones en VR y experiencias
+                    interactivas.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Videojuegos</span><span class="tag">VR</span><span class="tag">AR</span><span
+                        class="tag">Enterprise</span><span class="tag">Profesional</span>
+                </div>
+            </div>
+            <div class="timeline-item scroll-reveal">
+                <span class="timeline-year">2017 - 2020</span>
+                <h3>Blue Fenec</h3>
+                <p>Blue Fenec, estudio especializado en experiencias inmersivas de VR y videojuegos.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Videojuegos</span><span class="tag">VR</span><span class="tag">XR</span><span
+                        class="tag">Cofundador</span>
+                </div>
+            </div>
+            <div class="timeline-item scroll-reveal">
+                <span class="timeline-year">2015 - 2017</span>
+                <h3>Bixelium</h3>
+                <p>Primero fuimos un club de varios estudios de videojuegos; luego formamos un solo estudio más grande
+                    para proyectos más ambiciosos.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Game Studio</span><span class="tag">Cofundador</span><span class="tag">Club de
+                        Desarrolladores de Videojuegos</span>
+                </div>
+            </div>
+            <div class="timeline-item scroll-reveal">
+                <span class="timeline-year">2014 - 2015</span>
+                <h3>Black Spring</h3>
+                <p>Junto a mi compañero de tesis, fundamos Black Spring, nuestro primer estudio de desarrollo de
+                    videojuegos.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Game Studio</span><span class="tag">Cofundador</span><span
+                        class="tag">Indie</span>
+                </div>
+            </div>
+            <div class="timeline-item scroll-reveal">
+                <span class="timeline-year">2013 - 2014 </span>
+                <h3>Umbral Light Games - El Sacrificio</h3>
+                <p>Participé como primer programador en El Sacrificio, un juego de terror tipo Slenderman desarrollado
+                    por Umbral Light Games. No fui fundador, pero fui el primer programador que se unió al equipo.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Terror</span><span class="tag">Slenderman-like</span><span
+                        class="tag">Programador</span>
+                </div>
+            </div>
+            <div class="timeline-item scroll-reveal">
+                <span class="timeline-year">2012</span>
+                <h3>Proyecto de Titulación</h3>
+                <p>Mi compañero de tesis y yo desarrollamos un serious game utilizando Unity y Kinect, originalmente iba
+                    a ser XNA. Mi primer proyecto formal.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Unity</span><span class="tag">Kinect</span><span class="tag">Serious Game</span>
+                </div>
+            </div>
+            <div class="timeline-item scroll-reveal">
+                <span class="timeline-year">2010</span>
+                <h3>XNA & C#</h3>
+                <p>Recibí un curso extracurricular de XNA y C# en la universidad. Fue mi primer acercamiento a la
+                    programación de videojuegos. Al terminar el curso intenté hacer un juego de peleas de Dragon Ball,
+                    experiencia que despertó mi pasión por crear videojuegos.</p>
+                <div class="timeline-tags">
+                    <span class="tag">XNA</span><span class="tag">C#</span><span class="tag">Primer Contacto</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- MODALS -->
     <div class="modal-overlay" id="modal-tecza" onclick="closeModalOnOverlay(event, 'modal-tecza')">
         <div class="modal">
@@ -227,7 +322,17 @@
                         <span class="modal-role">Desarrollador XR</span>
                     </div>
                 </div>
-                <div class="modal-media-container" data-media="Apolograma"></div>
+                <div class="modal-media-container" data-media="Apolograma">
+                <div class="skeleton-modal">
+                    <div class="skeleton-carousel">
+                        <div class="skeleton-slide"></div>
+                        <div class="skeleton-caption">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="modal-description">
                     <p>Desde 2018 trabajo profesionalmente en Apolograma, durante los primeros años desarrollamos Kiwi
                         Diwi un endless runner 2.5D gore cartoon y otros proyectos que no vieron la luz, despues pasamos
@@ -255,7 +360,17 @@
                         <span class="modal-role">Cofundador</span>
                     </div>
                 </div>
-                <div class="modal-media-container" data-media="BlueFenec"></div>
+                <div class="modal-media-container" data-media="BlueFenec">
+                <div class="skeleton-modal">
+                    <div class="skeleton-carousel">
+                        <div class="skeleton-slide"></div>
+                        <div class="skeleton-caption">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="modal-description">
                     <p>Blue Fenec representó una división en Bixelium hubo algunas cosas que a algunos no nos gustaban
                         pero al ver que solo 5 de nosotros éramos los inconformes decidimos irnos por un camino
@@ -287,7 +402,17 @@
                         <span class="modal-role">Cofundador</span>
                     </div>
                 </div>
-                <div class="modal-media-container" data-media="Bixelium"></div>
+                <div class="modal-media-container" data-media="Bixelium">
+                <div class="skeleton-modal">
+                    <div class="skeleton-carousel">
+                        <div class="skeleton-slide"></div>
+                        <div class="skeleton-caption">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="modal-description">
                     <p>Bixelium, o Bixel como se llamaba al inicio, surgió a partir de la comunidad que se formó después
                         de los cursos de Black Spring y de la incorporación de nuevos miembros.</p>
@@ -317,7 +442,17 @@
                         <span class="modal-role">Cofundador</span>
                     </div>
                 </div>
-                <div class="modal-media-container" data-media="BlackSpring"></div>
+                <div class="modal-media-container" data-media="BlackSpring">
+                <div class="skeleton-modal">
+                    <div class="skeleton-carousel">
+                        <div class="skeleton-slide"></div>
+                        <div class="skeleton-caption">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="modal-description">
                     <p>Black Spring nació de la idea de mi compañero de tesis y yo de seguir creando juegos más allá de
                         la universidad. Fue nuestro primer estudio "formal" y donde aprendímos los fundamentos y muchas
@@ -344,7 +479,17 @@
                         <span class="modal-role">Primer Programador</span>
                     </div>
                 </div>
-                <div class="modal-media-container" data-media="UmbralLight"></div>
+                <div class="modal-media-container" data-media="UmbralLight">
+                <div class="skeleton-modal">
+                    <div class="skeleton-carousel">
+                        <div class="skeleton-slide"></div>
+                        <div class="skeleton-caption">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="modal-description">
                     <p>El Sacrificio fue un juego de terror en primera persona inspirado en Slenderman, desarrollado por
                         Umbral Light Games. Aunque no fui miembro fundador del estudio, fui la primera persona en unirse
@@ -374,7 +519,17 @@
                         <span class="modal-role">Desarrollador Principal</span>
                     </div>
                 </div>
-                <div class="modal-media-container" data-media="Kinu"></div>
+                <div class="modal-media-container" data-media="Kinu">
+                <div class="skeleton-modal">
+                    <div class="skeleton-carousel">
+                        <div class="skeleton-slide"></div>
+                        <div class="skeleton-caption">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="modal-description">
                     <p>Mi proyecto de titulacion universitaria consistió en desarrollar un serious game utilizando Unity
                         y el sensor Kinect de Microsoft. El objetivo era crear una experiencia interactiva donde el
@@ -403,7 +558,17 @@
                         <span class="modal-role">Proyecto Personal / Academico</span>
                     </div>
                 </div>
-                <div class="modal-media-container" data-media="XNA"></div>
+                <div class="modal-media-container" data-media="XNA">
+                <div class="skeleton-modal">
+                    <div class="skeleton-carousel">
+                        <div class="skeleton-slide"></div>
+                        <div class="skeleton-caption">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-text short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="modal-description">
                     <p>Este fue mi primer contacto con la programación de videojuegos. Durante un curso extracurricular
                         de XNA y C# en la universidad, me propuse crear un juego de peleas inspirado en Dragon Ball.</p>

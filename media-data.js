@@ -504,6 +504,62 @@ window.MEDIA_DATA = {
                                     ]
                       }
                   ],
+    "Destacado":  [
+                      {
+                          "title":  "Food Wars",
+                          "description":  "La opus magnum de Blue Fenec, un shooter 2.5D PVP de couch multiplayer. Protagonizado por comida, la idea de los personajes surgió de que siempre que nos juntábamos era difícil decidir qué comer entre pizza o hamburguesa. \r\n\r\nFood Wars retoma el trabajo de Pepinos Bullet, un prototipo de juego de un miembro llamado Adán donde dos pepinos se agarran a balazos.",
+                          "items":  [
+                                        {
+                                            "type":  "video",
+                                            "src":  "Media/Destacado/Modal/Food Wars/Blue Fenec 5.mp4",
+                                            "name":  "Blue Fenec 5"
+                                        }
+                                    ]
+                      },
+                      {
+                          "title":  "Kiwi Diwi",
+                          "description":  "La opus magnum de Apolograma, un endless runner cartoon con un toque de gore.",
+                          "items":  [
+                                        {
+                                            "type":  "video",
+                                            "src":  "Media/Destacado/Modal/Kiwi Diwi/Apolograma 1.mp4",
+                                            "name":  "Apolograma 1"
+                                        }
+                                    ]
+                      },
+                      {
+                          "title":  "Monta2",
+                          "description":  "Un simulador de montacargas en standalone VR que luego integró un volante físico Logitech G920 y unas palancas con hardware custom y pasó a ser PCVR.",
+                          "items":  [
+                                        {
+                                            "type":  "video",
+                                            "src":  "Media/Destacado/Modal/Monta2/Apolograma 1.mp4",
+                                            "name":  "Apolograma 1"
+                                        },
+                                        {
+                                            "type":  "video",
+                                            "src":  "Media/Destacado/Modal/Monta2/Apolograma 2.mp4",
+                                            "name":  "Apolograma 2"
+                                        }
+                                    ]
+                      },
+                      {
+                          "title":  "PMI",
+                          "description":  "Proyectos que hicimos para las diferentes marcas de Philip Morris International: Marlboro, Zyn, IQOS, etc. La mayoría en VR, otros en hardware físico como la tabla de surf y otros para pantallas touch.",
+                          "items":  [
+                                        {
+                                            "type":  "video",
+                                            "src":  "Media/Destacado/Modal/PMI/Apolograma 1.mp4",
+                                            "name":  "Apolograma 1"
+                                        },
+                                        {
+                                            "type":  "video",
+                                            "src":  "Media/Destacado/Modal/PMI/Apolograma 2.mp4",
+                                            "name":  "Apolograma 2"
+                                        }
+                                    ]
+                      }
+                  ],
     "Kinu":  [
                  {
                      "title":  "Kinu",
@@ -620,3 +676,59 @@ window.MEDIA_DATA = {
                 }
             ]
 };
+window.FEATURED_PROJECTS = [
+    {
+        "title":  "Food Wars",
+        "description":  "La opus magnum de Blue Fenec, un shooter 2.5D PVP de couch multiplayer. Protagonizado por comida, la idea de los personajes surgió de que siempre que nos juntábamos era difícil decidir qué comer entre pizza o hamburguesa. \r\n\r\nFood Wars retoma el trabajo de Pepinos Bullet, un prototipo de juego de un miembro llamado Adán donde dos pepinos se agarran a balazos.",
+        "items":  [
+                      {
+                          "type":  "video",
+                          "src":  "Media/Destacado/Modal/Food Wars/Blue Fenec 5.mp4",
+                          "name":  "Blue Fenec 5"
+                      }
+                  ]
+    },
+    {
+        "title":  "Kiwi Diwi",
+        "description":  "La opus magnum de Apolograma, un endless runner cartoon con un toque de gore.",
+        "items":  [
+                      {
+                          "type":  "video",
+                          "src":  "Media/Destacado/Modal/Kiwi Diwi/Apolograma 1.mp4",
+                          "name":  "Apolograma 1"
+                      }
+                  ]
+    },
+    {
+        "title":  "Monta2",
+        "description":  "Un simulador de montacargas en standalone VR que luego integró un volante físico Logitech G920 y unas palancas con hardware custom y pasó a ser PCVR.",
+        "items":  [
+                      {
+                          "type":  "video",
+                          "src":  "Media/Destacado/Modal/Monta2/Apolograma 1.mp4",
+                          "name":  "Apolograma 1"
+                      },
+                      {
+                          "type":  "video",
+                          "src":  "Media/Destacado/Modal/Monta2/Apolograma 2.mp4",
+                          "name":  "Apolograma 2"
+                      }
+                  ]
+    },
+    {
+        "title":  "PMI",
+        "description":  "Proyectos que hicimos para las diferentes marcas de Philip Morris International: Marlboro, Zyn, IQOS, etc. La mayoría en VR, otros en hardware físico como la tabla de surf y otros para pantallas touch.",
+        "items":  [
+                      {
+                          "type":  "video",
+                          "src":  "Media/Destacado/Modal/PMI/Apolograma 1.mp4",
+                          "name":  "Apolograma 1"
+                      },
+                      {
+                          "type":  "video",
+                          "src":  "Media/Destacado/Modal/PMI/Apolograma 2.mp4",
+                          "name":  "Apolograma 2"
+                      }
+                  ]
+    }
+];

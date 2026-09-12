@@ -54,9 +54,65 @@ function Get-TextFileContent($filePath) {
 }
 
 $mediaData = [ordered]@{}
+$featuredProjects = @()
 
 # Obtener todos los directorios de categoria bajo Media
 $categories = Get-ChildItem -Path $mediaPath -Directory | Sort-Object { Get-NaturalSortKey $_.Name }
+
+# --- PROYECTOS DESTACADOS: escanear Media/Destacado/Modal si existe ---
+$featuredPath = Join-Path $mediaPath "Destacado"
+$featuredModalPath = Join-Path $featuredPath "Modal"
+if (Test-Path $featuredModalPath) {
+    $featuredSubdirs = Get-ChildItem -Path $featuredModalPath -Directory | Sort-Object { Get-NaturalSortKey $_.Name }
+    foreach ($subdir in $featuredSubdirs) {
+        $projectTitle = $subdir.Name
+        $items = @()
+
+        # Descripcion desde .txt
+        $projectDesc = ""
+        $specificTxt = Join-Path $subdir.FullName "$projectTitle.txt"
+        if (Test-Path $specificTxt -PathType Leaf) {
+            $projectDesc = Get-TextFileContent $specificTxt
+        } else {
+            $anyTxt = Get-ChildItem -Path $subdir.FullName -Filter *.txt -File | Select-Object -First 1
+            if ($anyTxt) { $projectDesc = Get-TextFileContent $anyTxt.FullName }
+        }
+
+        $files = Get-ChildItem -Path $subdir.FullName -File | Sort-Object { Get-NaturalSortKey $_.Name }
+        foreach ($file in $files) {
+            $ext = $file.Extension.ToLower()
+            $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
+            $relPath = "Media/Destacado/Modal/$projectTitle/$($file.Name)"
+            $type = $null
+            if ($videoExts -contains $ext) { $type = "video" }
+            elseif ($imageExts -contains $ext) { $type = "image" }
+
+            if ($type) {
+                $itemSpecificTxt = Join-Path $subdir.FullName "$baseName.txt"
+                $itemDesc = ""
+                if (Test-Path $itemSpecificTxt -PathType Leaf) {
+                    $itemDesc = Get-TextFileContent $itemSpecificTxt
+                }
+                $itemObj = [ordered]@{
+                    type = $type
+                    src = $relPath
+                    name = $baseName
+                }
+                if ($itemDesc) { $itemObj["description"] = $itemDesc }
+                $items += $itemObj
+            }
+        }
+
+        if ($items.Count -gt 0) {
+            $projectObj = [ordered]@{
+                title = $projectTitle
+            }
+            if ($projectDesc) { $projectObj["description"] = $projectDesc }
+            $projectObj["items"] = $items
+            $featuredProjects += $projectObj
+        }
+    }
+}
 
 foreach ($cat in $categories) {
     $catName = $cat.Name
@@ -247,6 +303,7 @@ foreach ($cat in $categories) {
 }
 
 $json = $mediaData | ConvertTo-Json -Depth 6
+$featuredJson = $featuredProjects | ConvertTo-Json -Depth 6
 $jsContent = @"
 // =============================================================================
 // ARCHIVO AUTOGENERADO POR generate-media.bat / generate-media.ps1
@@ -256,7 +313,8 @@ $jsContent = @"
 // =============================================================================
 
 window.MEDIA_DATA = $json;
+window.FEATURED_PROJECTS = $featuredJson;
 "@
 
 [System.IO.File]::WriteAllText($outputJsPath, $jsContent, [System.Text.Encoding]::UTF8)
-Write-Output "Sincronizacion completada con exito. Archivo media-data.js generado con $($mediaData.Keys.Count) categorias."
+Write-Output "Sincronizacion completada con exito. Archivo media-data.js generado con $($mediaData.Keys.Count) categorias y $($featuredProjects.Count) proyectos destacados."

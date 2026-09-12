@@ -1,0 +1,1 @@
+Un simulador de montacargas en standalone VR que luego integró un volante físico Logitech G920 y unas palancas con hardware custom y pasó a ser PCVR.
