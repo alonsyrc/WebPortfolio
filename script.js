@@ -172,6 +172,27 @@ function renderFeaturedProjects() {
 
     grid.innerHTML = '';
 
+    // ── Starco Bounce Madness (Juego WebGL Jugable Destacado) ──
+    const gameCard = document.createElement('div');
+    gameCard.className = 'project-card playable-game-card';
+    gameCard.style.transitionDelay = '0s';
+    gameCard.onclick = () => window.open('games/Starco-Bounce-Madness/Build/', '_blank');
+    gameCard.innerHTML = `
+        <div class="project-media">
+            <span class="game-badge">🎮 WebGL Jugable</span>
+            <video src="games/Starco-Bounce-Madness/Build/StreamingAssets/gameplay.mp4" autoplay loop muted playsinline></video>
+            <div class="card-hover-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="project-info">
+            <h3>Starco Bounce Madness</h3>
+        </div>
+    `;
+    grid.appendChild(gameCard);
+
     window.FEATURED_PROJECTS.forEach((project, idx) => {
         const firstItem = project.items[0];
         const isVideo = firstItem.type === 'video';
@@ -179,7 +200,7 @@ function renderFeaturedProjects() {
 
         const card = document.createElement('div');
         card.className = 'project-card';
-        card.style.transitionDelay = `${idx * 0.08}s`;
+        card.style.transitionDelay = `${(idx + 1) * 0.08}s`;
         card.onclick = () => openFeaturedModal(project);
 
         if (isVideo) {
