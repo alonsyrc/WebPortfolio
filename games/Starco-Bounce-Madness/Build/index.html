@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Starco Bounce Madness | Alonso Rodriguez</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <canvas id="arco-starfield" aria-hidden="true"></canvas>
+    <div id="unity-container">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="unity-loading-bar">
+        <div class="arco-loader-card">
+          <div class="arco-spark-wrap" aria-hidden="true">
+            <div class="arco-spark-glow"></div>
+            <svg class="arco-rings-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="arcoRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#a855f7" />
+                  <stop offset="50%" stop-color="#ec4899" />
+                  <stop offset="100%" stop-color="#a855f7" stop-opacity="0.1" />
+                </linearGradient>
+              </defs>
+              <circle class="arco-ring-track" cx="80" cy="80" r="73" />
+              <circle class="arco-ring-outer" cx="80" cy="80" r="68" />
+              <circle class="arco-ring-inner" cx="80" cy="80" r="59" />
+            </svg>
+          </div>
+          <h1 class="arco-loader-title">STATCO BOUNCE MADNESS</h1>
+          <div class="arco-progress-panel">
+            <div class="arco-progress-shell">
+              <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+              </div>
+            </div>
+            <div class="arco-progress-meta">
+              <span>CARGANDO PARTIDA</span>
+              <span id="arco-progress-percent">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-logo-title-footer"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Starkihno Soccer</div>
+      </div>
+    </div>
+    <script>
+      var canvas = document.querySelector("#unity-canvas");
+
+      function unityShowBanner(msg, type) {
+        var warningBanner = document.querySelector("#unity-warning");
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/WebBuild.loader.js";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/WebBuild.data",
+        frameworkUrl: buildUrl + "/WebBuild.framework.js",
+        codeUrl: buildUrl + "/WebBuild.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Apolograma",
+        productName: "Starkihno Soccer",
+        productVersion: "0.1.218",
+        showBanner: unityShowBanner,
+      };
+
+      // Layout (9:16 game: full screen on tall portrait, centered with side bars otherwise)
+      // is handled entirely in TemplateData/style.css - no user-agent sniffing needed.
+
+      document.querySelector("#unity-loading-bar").style.display = "flex";
+
+      var progressBarEl = document.querySelector("#unity-progress-bar-full");
+      var progressPercentEl = document.querySelector("#arco-progress-percent");
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          var pct = Math.round(100 * progress);
+          if (progressBarEl) progressBarEl.style.width = pct + "%";
+          if (progressPercentEl) progressPercentEl.textContent = pct + "%";
+        }).then((unityInstance) => {
+          document.querySelector("#unity-loading-bar").style.display = "none";
+          document.querySelector("#unity-fullscreen-button").onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+
+      document.body.appendChild(script);
+
+      // Fondo estrellado animado que rellena los laterales en desktop
+      (function initStarfield() {
+        var starCanvas = document.querySelector("#arco-starfield");
+        if (!starCanvas) return;
+        var ctx = starCanvas.getContext("2d");
+        if (!ctx) return;
+        var stars = [], w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        function resize() {
+          w = window.innerWidth;
+          h = window.innerHeight;
+          starCanvas.width = Math.floor(w * dpr);
+          starCanvas.height = Math.floor(h * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          var count = Math.min(420, Math.max(220, Math.floor((w * h) / 1600)));
+          stars = [];
+          for (var i = 0; i < count; i++) {
+            var tier = Math.random();
+            var radius = tier > 0.92 ? (1.6 + Math.random() * 1.1) : (tier > 0.55 ? (0.95 + Math.random() * 0.65) : (0.45 + Math.random() * 0.45));
+            var baseAlpha = tier > 0.85 ? (0.75 + Math.random() * 0.25) : (0.3 + Math.random() * 0.5);
+            var tintRoll = Math.random();
+            var color = tintRoll > 0.82 ? "186, 230, 253" : (tintRoll > 0.94 ? "254, 205, 211" : "255, 255, 255");
+            stars.push({
+              x: Math.random() * w, y: Math.random() * h, r: radius, alpha: baseAlpha,
+              phase: Math.random() * Math.PI * 2, speed: 0.018 + Math.random() * 0.035,
+              driftY: 0.06 + Math.random() * 0.18, driftX: (Math.random() - 0.5) * 0.08,
+              color: color, sparkle: tier > 0.95
+            });
+          }
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        function render() {
+          ctx.clearRect(0, 0, w, h);
+          for (var i = 0; i < stars.length; i++) {
+            var s = stars[i];
+            s.phase += s.speed;
+            s.y -= s.driftY;
+            s.x += s.driftX;
+            if (s.y < -4) s.y = h + 4;
+            if (s.x < -4) s.x = w + 4;
+            if (s.x > w + 4) s.x = -4;
+            var twinkle = 0.68 + 0.32 * Math.sin(s.phase);
+            var a = Math.min(1, Math.max(0.12, s.alpha * twinkle));
+            ctx.fillStyle = "rgba(" + s.color + "," + a.toFixed(3) + ")";
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fill();
+            if (s.sparkle && twinkle > 0.86) {
+              var len = s.r * 3.2;
+              ctx.strokeStyle = "rgba(" + s.color + "," + (a * 0.55).toFixed(3) + ")";
+              ctx.lineWidth = 0.75;
+              ctx.beginPath();
+              ctx.moveTo(s.x - len, s.y);
+              ctx.lineTo(s.x + len, s.y);
+              ctx.moveTo(s.x, s.y - len);
+              ctx.lineTo(s.x, s.y + len);
+              ctx.stroke();
+            }
+          }
+          requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+      })();
+    </script>
+  </body>
+</html>
